@@ -30,7 +30,7 @@ class probe(threading.Thread):
     def run(self):
         log(self.name, 'started')
         #self.ip_cidr_list = list(netaddr.IPNetwork(self.cidr))   # too much memory wasted
-        self.ip_cidr_list = netaddr.IPNetwork(self.cidr).iter_hosts()
+        self.ip_cidr_list = netaddr.IPNetwork(self.cidr).iter_hosts() # iterator is fucking good
         for self.ip in self.ip_cidr_list:
             if self.ip.is_unicast() and not self.ip.is_private():
                 try:
@@ -46,8 +46,11 @@ while True:
     if len(line)==0:
         break
     new_thread = probe(str(i), line)
+    new_thread.daemon = True
     new_thread.start()
+    # the following line's thread.join is wrong
+    #new_thread.join()  # this should be better than line 53's solution, though speed may lose
     i = i + 1
 
-time.sleep(36000)
-sys.exit(0)
+#time.sleep(36000)
+#sys.exit(0)

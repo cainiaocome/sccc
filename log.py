@@ -10,7 +10,7 @@ import threading
 from datetime import datetime
 
 do_we_debug=True
-res_file = 'res'
+log_file = 'log'
 
 log_lock = threading.Lock()
 def log(who,what):
@@ -20,7 +20,7 @@ def log(who,what):
     msg_with_crlf = '{} {}: {}\n'.format(t, who, what)
     if do_we_debug:
         print(msg)
-    with open(res_file, 'a') as res_f:
+    with open(log_file, 'a') as res_f:
         res_f.write(msg_with_crlf)
     res_f.close()
     log_lock.release()
