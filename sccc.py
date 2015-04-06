@@ -41,7 +41,7 @@ class probe(threading.Thread): # each thread probe one cidr
                     log('run', '{}'.format(sys.exc_info()))
 
 while True:
-    while threading.active_count()>=256:
+    while threading.active_count()>=max_thread:
         time.sleep(7)
     line = f.readline()
     if len(line)==0:
