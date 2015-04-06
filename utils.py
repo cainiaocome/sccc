@@ -4,6 +4,7 @@
 
 import sys
 import os
+import nmap
 import socket
 import time
 import requests
@@ -70,3 +71,7 @@ class password_producer(object):
 
     def __iter__(self):
         return file_iterator(self.f)
+
+if __name__=='__main__':
+    print('error: this is a utils file, dont excute it')
+    sys.exit(1)

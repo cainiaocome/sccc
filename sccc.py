@@ -16,11 +16,12 @@ import objgraph
 from datetime import datetime
 from log import log
 from poc import check, compromise
+from config import cc_file, max_thread
 
 i = 0
-f = open('ip.china','r')
+f = open(cc_file, 'r')
 
-class probe(threading.Thread):
+class probe(threading.Thread): # each thread probe one cidr
     
     def __init__(self, name, cidr):
         threading.Thread.__init__(self)

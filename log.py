@@ -8,9 +8,7 @@ import sys
 import time
 import threading
 from datetime import datetime
-
-do_we_debug=True
-log_file = 'log'
+from config import do_we_debug, log_file
 
 log_lock = threading.Lock()
 def log(who,what):
