@@ -35,8 +35,8 @@ class probe(threading.Thread): # each thread probe one cidr
         for self.ip in self.ip_cidr_list:
             if self.ip.is_unicast() and not self.ip.is_private():
                 try:
-                    if check(self.ip):
-                        compromise(self.ip)
+                    if check(str(self.ip)):
+                        compromise(str(self.ip))
                 except:
                     log('run', '{}'.format(sys.exc_info()))
 
@@ -52,6 +52,3 @@ while True:
     # the following line's thread.join is wrong
     #new_thread.join()  # this should be better than line 53's solution, though speed may lose
     i = i + 1
-
-#time.sleep(36000)
-#sys.exit(0)

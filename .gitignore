@@ -1,3 +1,4 @@
+ip
 ip.*
 poc.*
 test.*
@@ -7,3 +8,4 @@ password.txt
 config.py
 log
 res
+paramiko

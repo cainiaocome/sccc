@@ -12,6 +12,17 @@ import threading
 from datetime import datetime
 from log import log
 
+try:
+    from config import default_username_file
+except:
+    default_username_file = '/usr/share/dict/username.txt'
+
+try:
+    from config import default_password_file
+except:
+    default_password_file = '/usr/share/dict/password.txt'
+    
+
 # headers is used so often, i include my firefox's here
 headers = {'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8',
             'Accept-Encoding':'gzip, deflate, utf-8',
@@ -19,8 +30,6 @@ headers = {'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q
             'Connection':'keep-alive',
             'Host':'tieba.baidu.com',
             'User-Agent':'Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20140924 Firefox/24.0 Iceweasel/24.8.1'}
-default_username_file = '/usr/share/dict/username.txt'
-default_password_file = '/usr/share/dict/password.txt'
 
 # a simple port probe implementation
 def check_port(ip, port):
