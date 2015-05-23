@@ -28,7 +28,6 @@ headers = {'Accept':'text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q
             'Accept-Encoding':'gzip, deflate, utf-8',
             'Accept-Language':'en-US,en;q=0.5',
             'Connection':'keep-alive',
-            'Host':'tieba.baidu.com',
             'User-Agent':'Mozilla/5.0 (X11; Linux x86_64; rv:24.0) Gecko/20140924 Firefox/24.0 Iceweasel/24.8.1'}
 
 # a simple port probe implementation
